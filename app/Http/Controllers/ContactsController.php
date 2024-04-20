@@ -98,4 +98,23 @@ class ContactsController extends Controller
         // Redirect to the contacts view page
         return redirect()->route('view.contacts');
     }
+
+    public function search(Request $request)
+    {
+        $searchTerm = $request->input('search');
+        $userId = Auth::user()->id; // Get the logged-in user ID
+
+        // Build your search query based on the search term and user ID
+        $searchResults = Contacts::where('user_id', $userId)
+            ->where(function ($query) use ($searchTerm) {
+                $query->where('contact_name', 'like', "%{$searchTerm}%")
+                    ->orWhere('contact_email', 'like', "%{$searchTerm}%")
+                    ->orWhere('contact_phone', 'like', "%{$searchTerm}%");
+            })
+            // You can add more search conditions based on your needs
+            ->get();
+
+        return view('add.search', compact('searchResults', 'searchTerm'));
+    }
+
 }

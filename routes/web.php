@@ -20,6 +20,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('delete/{id}', [ContactsController::class, 'destroy'])->name('contact.destroy');
     Route::get('editcontact/{id}', [ContactsController::class, 'edit'])->name('contact.edit');
     Route::post('update/{id}', [ContactsController::class, 'update'])->name('contact.update');
+    Route::get('search', [ContactsController::class, 'search'])->name('contacts.search');
     // end of custom routes
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
