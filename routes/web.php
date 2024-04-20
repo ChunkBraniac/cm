@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ContactsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -12,6 +13,15 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    // custom routes
+    Route::get('addcontact', [ContactsController::class, 'addContactPage']);
+    Route::post('addcontact', [ContactsController::class, 'addContact'])->name('contact.add');
+    Route::get('mycontacts', [ContactsController::class, 'myContacts'])->name('view.contacts');
+    Route::delete('delete/{id}', [ContactsController::class, 'destroy'])->name('contact.destroy');
+    Route::get('editcontact/{id}', [ContactsController::class, 'edit'])->name('contact.edit');
+    Route::post('update/{id}', [ContactsController::class, 'update'])->name('contact.update');
+    // end of custom routes
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
