@@ -80,6 +80,7 @@ class ContactsController extends Controller
 
         // Find the contact to be updated
         $update = Contacts::findOrFail($id);
+        
         // Update the contact data
         $update->update($request->all());
 
